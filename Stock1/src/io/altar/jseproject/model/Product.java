@@ -16,7 +16,7 @@ public class Product {
 		this.pvp = pvp;
 	}
 
-	public int getId() {
+	public void int getId() {
 		return id;
 	}
 
