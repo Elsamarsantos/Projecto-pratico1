@@ -155,11 +155,11 @@ public class TextInterface {
 		
 		System.out.print("colocar o valor de desconto:");
 		String valorDescontoS= sc.nextLine();
-		int valorDesconto = Integer.parseInt(valorDescontoS);
+		double valorDesconto = Double.parseDouble(valorDescontoS);
 		
 		System.out.print("colocar o valor do iva:");
 		String ivaS= sc.nextLine();
-		int iva = Integer.parseInt(ivaS);
+		double iva = Double.parseDouble(ivaS);
 		
 		
 		System.out.print("colocar o valor do pvp:");
@@ -167,9 +167,9 @@ public class TextInterface {
 			System.out.print("pvp= 0,00");
 			break;
 		}
-		double pvp= sc.nextDouble();
+		String pvpS= sc.nextLine();
 		
-		//double pvp = Double.parseDouble(pvpS);
+		double pvp = Double.parseDouble(pvpS);
 		sc.close();
 		System.out.print("novo:"+id+" , "+list+" , "+valorDesconto+" , "+iva+" , "+pvp);
 		
