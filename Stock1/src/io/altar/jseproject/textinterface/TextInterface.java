@@ -138,85 +138,65 @@ public class TextInterface {
 	}
 	
 	private static void criarNovoProduto() {
-		novoId();
-		novoLista();
-		novoValorDesconto();
-		novoIva();
-		novoPvp();
+		Scanner sc = new Scanner(System.in);
+		
+		
+
+		System.out.println("lista onde o produto esta:");
+		try {
+			String listS = sc.nextLine();
+			int list = Integer.parseInt(listS);
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			sc.nextLine();
+			criarNovoProduto();
+
+		}
+
+
+
+
+		System.out.println("colocar o valor de desconto:");
+		try {
+
+			String valorDescontoS= sc.nextLine();
+			int valorDesconto = Integer.parseInt(valorDescontoS);
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			sc.nextLine();
+			criarNovoProduto();
+
+		}
+
+
+
+
+		System.out.println("colocar o valor do iva:");
+		try {
+			
+			String ivaS= sc.nextLine();
+			double iva = Double.parseDouble(ivaS);
+
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			sc.nextLine();
+			criarNovoProduto();
+		}
+
+
+		System.out.println("colocar o valor do pvp:");
+		try {
+
+			String pvpS= sc.nextLine();
+			double pvp = Double.parseDouble(pvpS);
+			
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			sc.nextLine();
+			criarNovoProduto();
+
+		}
+		
 	}
-		private static void novoId() {
-			Scanner sc = new Scanner(System.in);
-			System.out.print("colocar o id:");
-			try {
-				String idS = sc.nextLine();
-				int id = Integer.parseInt(idS);
-				System.out.print(id);
-			}catch (Exception e) {
-				System.out.print("Erro: "+ e);
-				sc.nextLine();
-				novoId();
-			}sc.close();
-		}
-		private static void novoLista() {
-			Scanner sc = new Scanner(System.in);
-			System.out.print("lista onde o produto esta:");
-			try {
-				String listS = sc.nextLine();
-				int list = Integer.parseInt(listS);
-			}catch (Exception e) {
-				System.out.print("Erro: "+ e);
-				sc.nextLine();
-				novoLista();
-			}sc.close();
-		}
-		
-		private static void novoValorDesconto() {
-			Scanner sc = new Scanner(System.in);
-			System.out.print("colocar o valor de desconto:");
-			try {
-				
-				String valorDescontoS= sc.nextLine();
-				int valorDesconto = Integer.parseInt(valorDescontoS);
-			}catch (Exception e) {
-				System.out.print("Erro: "+ e);
-				sc.nextLine();
-				novoValorDesconto();
-			}sc.close();
-		}
-		
-		private static void novoIva() {
-			Scanner sc = new Scanner(System.in);
-			System.out.print("colocar o valor do iva:");
-			try {
-				double iva=0;
-				if (iva<=0 && iva>=100){
-					iva= sc.nextDouble();	
-				}
-
-			}catch (Exception e) {
-				System.out.print("Erro: "+ e);
-				sc.nextLine();
-				novoIva();
-			}sc.close();
-		}
-
-		private static void novoPvp() {
-			Scanner sc = new Scanner(System.in);
-			try {
-				System.out.print("colocar o valor do pvp:");
-				String pvpS= sc.nextLine();
-				double pvp = Double.parseDouble(pvpS);
-			}catch (Exception e) {
-				System.out.print("Erro: "+ e);
-				sc.nextLine();
-				novoPvp();
-			}sc.close();
-		}
-		
-		
-
-
-
-	
 
 }
