@@ -7,8 +7,8 @@ public class Shelf extends Entity {
 	private double precoAluguer;
 	
 
-	public Shelf(Long id, int capacidade, Product produtoAlberga, double precoAluguer) {
-		super(id);
+	public Shelf(int capacidade, Product produtoAlberga, double precoAluguer) {
+		
 		this.capacidade = capacidade;
 		this.produtoAlberga = produtoAlberga;
 		this.precoAluguer = precoAluguer;

@@ -1,14 +1,16 @@
 package io.altar.jseproject.model;
 
+import java.util.Arrays;
+
 public class Product extends Entity {
 	
 	private Shelf[] listShelfIn;
-	private int valorDesconto;
-	private int iva;
+	private double valorDesconto;
+	private double iva;
 	private double pvp;
 	
-	public Product(Long id, Shelf[] listShelfIn, int valorDesconto, int iva, double pvp) {
-		super(id);
+	public Product(Shelf[] listShelfIn, double valorDesconto, double iva, double pvp) {
+		
 		this.listShelfIn = listShelfIn;
 		this.valorDesconto = valorDesconto;
 		this.iva = iva;
@@ -23,19 +25,19 @@ public class Product extends Entity {
 		this.listShelfIn = listShelfIn;
 	}
 
-	public int getValorDesconto() {
+	public double getValorDesconto() {
 		return valorDesconto;
 	}
 
-	public void setValorDesconto(int valorDesconto) {
+	public void setValorDesconto(double valorDesconto) {
 		this.valorDesconto = valorDesconto;
 	}
 
-	public int getIva() {
+	public double getIva() {
 		return iva;
 	}
 
-	public void setIva(int iva) {
+	public void setIva(double iva) {
 		this.iva = iva;
 	}
 
@@ -45,6 +47,12 @@ public class Product extends Entity {
 
 	public void setPvp(double pvp) {
 		this.pvp = pvp;
+	}
+
+	@Override
+	public String toString() {
+		return "Product"+this.getId()+" [listShelfIn=" + Arrays.toString(listShelfIn) + ", valorDesconto=" + valorDesconto + ", iva="
+				+ iva + ", pvp=" + pvp + "]";
 	}
 	
 	

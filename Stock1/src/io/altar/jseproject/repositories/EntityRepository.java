@@ -29,7 +29,8 @@ public abstract class EntityRepository <T extends Entity> {
 	
 	
 //consultar atraves do ID	
-	public T consultById(Long id) {
+	public  T consultById(Long id) {
+	
 		return mapa.get(id);
 	}
 	
@@ -42,6 +43,10 @@ public abstract class EntityRepository <T extends Entity> {
 	public  void removeById(long id) {
 		mapa.remove(id);
 		
+	}
+	
+	public Map<Long, T> getMap() {
+		return mapa;
 	}
 	
 	

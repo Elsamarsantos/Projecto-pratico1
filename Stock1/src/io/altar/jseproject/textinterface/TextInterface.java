@@ -1,23 +1,23 @@
 package io.altar.jseproject.textinterface;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.model.Shelf;
+import io.altar.jseproject.repositories.ProductRepository;
+import io.altar.jseproject.repositories.ShelfRepository;
 
 public class TextInterface {
 	
-	;
+	ProductRepository productRepository1 = ProductRepository.getInstance();
+	ShelfRepository shelfRepository1 = ShelfRepository.getInstance();
+	 
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-
-		menuInicial();
-	}
 // menu inicial 
-	private static void menuInicial() {
+	public  void menuInicial() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("1) Listar produtos");
 		System.out.println("2) Listar prateleiras");
@@ -45,12 +45,9 @@ public class TextInterface {
 
 	}
 //menu de produtos
-	private static void menuListarProdutos() {
+	private void menuListarProdutos() {
 		
-		//String [] listaProdutos={} ;
-//		Product produto1= new Product (1,[1],3,23,2.00);
-//					
-//		
+
 //			
 //				
 //		ArrayList<String> listaProdutos= new ArrayList<String>();
@@ -58,6 +55,7 @@ public class TextInterface {
 //				
 //		System.out.println(listaProdutos);
 		
+	//	Iterator it <Product> = new Iterator;
 		
 		
 		Scanner sc = new Scanner(System.in);
@@ -78,13 +76,15 @@ public class TextInterface {
 			criarNovoProduto();
 			break;
 		case '2':
-			System.out.println("boa");
+			System.out.println("2) Editar um produto existente");
+			editProduct();
 			break;
 		case '3':
-			System.out.println("muito bem");
+			System.out.println("3) Consultar o detalhe de um produto");
+			consultProduct ();
 			break;
 		case '4':
-			System.out.println("maios ou menos");
+			System.out.println("4) Remover um produto");
 			break;
 		case '5':
 			menuInicial();break;
@@ -99,7 +99,7 @@ public class TextInterface {
 
 	}
 //menu de prateleiras
-	private static void menuListarPrateleiras() {
+	private  void menuListarPrateleiras() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("1) Criar nova prateleira");
 		System.out.println("2) Editar prateleira existente");
@@ -136,31 +136,23 @@ public class TextInterface {
 		sc.close();
 	
 	}
+
+// comeca o criar produto	
 	
-	private static void criarNovoProduto() {
+	private void criarNovoProduto() {
+		
+		double valorDesconto=0;
+		double iva=0;
+		double pvp=0;
 		Scanner sc = new Scanner(System.in);
 		
-		
-
-		System.out.println("lista onde o produto esta:");
-		try {
-			String listS = sc.nextLine();
-			int list = Integer.parseInt(listS);
-		}catch (Exception e) {
-			System.out.println("Erro: "+ e);
-			sc.nextLine();
-			criarNovoProduto();
-
-		}
-
-
 
 
 		System.out.println("colocar o valor de desconto:");
 		try {
 
 			String valorDescontoS= sc.nextLine();
-			int valorDesconto = Integer.parseInt(valorDescontoS);
+			valorDesconto = Integer.parseInt(valorDescontoS);
 		}catch (Exception e) {
 			System.out.println("Erro: "+ e);
 			sc.nextLine();
@@ -168,14 +160,11 @@ public class TextInterface {
 
 		}
 
-
-
-
 		System.out.println("colocar o valor do iva:");
 		try {
 			
 			String ivaS= sc.nextLine();
-			double iva = Double.parseDouble(ivaS);
+			iva = Double.parseDouble(ivaS);
 
 		}catch (Exception e) {
 			System.out.println("Erro: "+ e);
@@ -188,7 +177,7 @@ public class TextInterface {
 		try {
 
 			String pvpS= sc.nextLine();
-			double pvp = Double.parseDouble(pvpS);
+			pvp = Double.parseDouble(pvpS);
 			
 		}catch (Exception e) {
 			System.out.println("Erro: "+ e);
@@ -197,6 +186,146 @@ public class TextInterface {
 
 		}
 		
+		Product product1= new Product(null, valorDesconto, iva, pvp);
+		
+		productRepository1.saveId(product1);
+	
+		System.out.println("novo producto: "+ product1.toString());
+		
+		System.out.println("quer voltar ao menu Produtos? y ou n");
+		char opcao= sc.nextLine().charAt(0);
+
+		switch (opcao) {
+		case 'y':
+			menuListarProdutos();
+			break;
+		case 'n':
+			menuInicial();
+
+		default:menuInicial();
+		break;
+		}
+		sc.close();
+		
+
+	}
+	
+// comeca o editar produto	
+	
+	private void editProduct() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Colocar o id do produto:");
+		Long id = sc.nextLong();
+		sc.nextLine();
+		
+//primeiro temos de saber se o produto existe
+		
+		if(productRepository1.consultById((long)id)!=null) {
+			Product productToBeEdited = productRepository1.consultById((long)id);
+			
+			System.out.println("diga qual o valor do desconto");
+			
+			String valorDesconto = sc.nextLine();
+
+			if(valorDesconto.length()==0) {
+				double valorDescontoNew = productRepository1.consultById(id).getValorDesconto();
+				productToBeEdited.setValorDesconto(valorDescontoNew);
+			}
+			else {	
+				double valorDescontoNew= Double.parseDouble(valorDesconto);
+				productToBeEdited.setValorDesconto(valorDescontoNew);
+			}
+			
+			
+			
+			System.out.println("diga qual o valor do iva");
+			String iva = sc.nextLine();
+
+			if(iva.length()==0) {
+				double ivaNew = productRepository1.consultById(id).getIva();
+				productToBeEdited.setIva(ivaNew);
+			}
+			else {	
+				double ivaNew = Double.parseDouble(iva);
+				productToBeEdited.setIva(ivaNew);
+			}
+			
+
+
+		
+			System.out.println("diga qual o valor do pvp");
+			String pvp = sc.nextLine();
+
+			if(pvp.length()==0) {
+				double pvpNew = productRepository1.consultById(id).getPvp();
+				productToBeEdited.setPvp(pvpNew);
+			}
+			else {	
+				double pvpNew = Double.parseDouble(pvp);
+				productToBeEdited.setPvp(pvpNew);
+				
+			}
+			
+
+			productRepository1.editById(productToBeEdited);
+			System.out.println("novo producto: "+ productToBeEdited.toString());
+		
+		
+		
+		}else {
+			System.out.println("Esse produto nao existe" + id);
+			sc.nextLine();
+			editProduct();
+
+		}
+		System.out.println("quer voltar ao menu Produtos? y ou n");
+		char opcao= sc.nextLine().charAt(0);
+
+		switch (opcao) {
+		case 'y':
+			menuListarProdutos();
+			break;
+		case 'n':
+			menuInicial();
+
+		default:menuInicial();
+		break;
+		}
+		sc.close();
+
 	}
 
+
+
+
+	
+
+	private void consultProduct () {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Colocar o id do produto:");
+		
+		long id = sc.nextLong();
+		sc.nextLine();
+		Product productToBeConsult = productRepository1.consultById((long)id);
+		
+		System.out.println("produto: "+ productToBeConsult.toString());
+		
+		
+		System.out.println("quer voltar ao menu Produtos? y ou n");
+		char opcao= sc.nextLine().charAt(0);
+
+		switch (opcao) {
+		case 'y':
+			menuListarProdutos();
+			break;
+		case 'n':
+			menuInicial();
+
+		default:menuInicial();
+		break;
+		}
+		sc.close();
+		
+		
+	}
 }
