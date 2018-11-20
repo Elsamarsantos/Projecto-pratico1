@@ -2,9 +2,12 @@ package io.altar.jseproject.textinterface;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
+import io.altar.jseproject.model.Entity;
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.repositories.ProductRepository;
@@ -29,8 +32,7 @@ public class TextInterface {
 			menuListarProdutos();
 
 		} else if (opcao == '2') {
-
-			System.out.println("2) Listar prateleiras");
+			menuListarPrateleiras();
 		}
 
 		else if (opcao == '3') {
@@ -44,19 +46,40 @@ public class TextInterface {
 		
 
 	}
+	
+// metodo para voltar aos menus
+	private void menus() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Menus: 1-inicial 2-Produtos 3-Prateleiras ");
+		char opcao= sc.nextLine().charAt(0);
+
+		switch (opcao) {
+		case '2':
+			menuListarProdutos();
+			break;
+		case '1':
+			menuInicial();
+		case '3':
+			menuListarPrateleiras();
+
+		default:menuInicial();
+		break;
+		}
+		sc.close();
+	}
+	
 //menu de produtos
 	private void menuListarProdutos() {
 		
+	//lista dos produtos existentes
+		System.out.println("Lista de Produtos:");
+		Iterator<Product> productlist = productRepository1.consultAll().iterator();
+		while (productlist.hasNext()){
 
-//			
-//				
-//		ArrayList<String> listaProdutos= new ArrayList<String>();
-//		listaProdutos.add(Product.getId());
-//				
-//		System.out.println(listaProdutos);
-		
-	//	Iterator it <Product> = new Iterator;
-		
+			System.out.println(productlist.next());
+
+		}
+	
 		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("1) Criar novo produtos");
@@ -73,7 +96,7 @@ public class TextInterface {
 		switch(opcao) {
 		case '1':
 			System.out.println("1) Criar novo produtos");
-			criarNovoProduto();
+			newProdut();
 			break;
 		case '2':
 			System.out.println("2) Editar um produto existente");
@@ -85,6 +108,7 @@ public class TextInterface {
 			break;
 		case '4':
 			System.out.println("4) Remover um produto");
+			removeProduct();
 			break;
 		case '5':
 			menuInicial();break;
@@ -98,55 +122,16 @@ public class TextInterface {
 		sc.close();
 
 	}
-//menu de prateleiras
-	private  void menuListarPrateleiras() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("1) Criar nova prateleira");
-		System.out.println("2) Editar prateleira existente");
-		System.out.println("3) Consultar o detalhe da prateleria");
-		System.out.println("4) Remover prateleira");
-		System.out.println("5) Voltar ao ecra anterior");
-		System.out.println("Escolha a opcao:");
-		
-		char opcao = sc.nextLine().charAt(0);
-		
-		switch(opcao) {
-		case '1':
-			System.out.println("1) Criar nova prateleira");
-			criarNovoProduto();
-			break;
-		case '2':
-			System.out.println("2) Editar prateleira existente");
-			break;
-		case '3':
-			System.out.println("3) Consultar o detalhe da prateleria");
-			break;
-		case '4':
-			System.out.println("4) Remover prateleira");
-			break;
-		case '5':
-			menuInicial();break;
-		default: 	
-			System.out.println("erro:escolha so opcao 1, 2, 3, 4 ou 5");
-			menuListarProdutos();
-			break;
-		
-		
-		}
-		sc.close();
-	
-	}
+
 
 // comeca o criar produto	
 	
-	private void criarNovoProduto() {
+	private void newProdut() {
 		
 		double valorDesconto=0;
 		double iva=0;
 		double pvp=0;
 		Scanner sc = new Scanner(System.in);
-		
-
 
 		System.out.println("colocar o valor de desconto:");
 		try {
@@ -156,7 +141,7 @@ public class TextInterface {
 		}catch (Exception e) {
 			System.out.println("Erro: "+ e);
 			sc.nextLine();
-			criarNovoProduto();
+			newProdut();
 
 		}
 
@@ -169,7 +154,7 @@ public class TextInterface {
 		}catch (Exception e) {
 			System.out.println("Erro: "+ e);
 			sc.nextLine();
-			criarNovoProduto();
+			newProdut();
 		}
 
 
@@ -182,7 +167,7 @@ public class TextInterface {
 		}catch (Exception e) {
 			System.out.println("Erro: "+ e);
 			sc.nextLine();
-			criarNovoProduto();
+			newProdut();
 
 		}
 		
@@ -192,20 +177,7 @@ public class TextInterface {
 	
 		System.out.println("novo producto: "+ product1.toString());
 		
-		System.out.println("quer voltar ao menu Produtos? y ou n");
-		char opcao= sc.nextLine().charAt(0);
-
-		switch (opcao) {
-		case 'y':
-			menuListarProdutos();
-			break;
-		case 'n':
-			menuInicial();
-
-		default:menuInicial();
-		break;
-		}
-		sc.close();
+		menus();
 		
 
 	}
@@ -217,14 +189,14 @@ public class TextInterface {
 		System.out.println("Colocar o id do produto:");
 		Long id = sc.nextLong();
 		sc.nextLine();
-		
-//primeiro temos de saber se o produto existe
-		
+
+		//primeiro temos de saber se o produto existe
+
 		if(productRepository1.consultById((long)id)!=null) {
 			Product productToBeEdited = productRepository1.consultById((long)id);
-			
+
 			System.out.println("diga qual o valor do desconto");
-			
+
 			String valorDesconto = sc.nextLine();
 
 			if(valorDesconto.length()==0) {
@@ -235,9 +207,7 @@ public class TextInterface {
 				double valorDescontoNew= Double.parseDouble(valorDesconto);
 				productToBeEdited.setValorDesconto(valorDescontoNew);
 			}
-			
-			
-			
+
 			System.out.println("diga qual o valor do iva");
 			String iva = sc.nextLine();
 
@@ -249,10 +219,7 @@ public class TextInterface {
 				double ivaNew = Double.parseDouble(iva);
 				productToBeEdited.setIva(ivaNew);
 			}
-			
 
-
-		
 			System.out.println("diga qual o valor do pvp");
 			String pvp = sc.nextLine();
 
@@ -263,69 +230,153 @@ public class TextInterface {
 			else {	
 				double pvpNew = Double.parseDouble(pvp);
 				productToBeEdited.setPvp(pvpNew);
-				
+
 			}
-			
+
 
 			productRepository1.editById(productToBeEdited);
 			System.out.println("novo producto: "+ productToBeEdited.toString());
-		
-		
-		
+
+
+
 		}else {
 			System.out.println("Esse produto nao existe" + id);
-			sc.nextLine();
+
 			editProduct();
-
+			sc.nextLine();
 		}
-		System.out.println("quer voltar ao menu Produtos? y ou n");
-		char opcao= sc.nextLine().charAt(0);
-
-		switch (opcao) {
-		case 'y':
-			menuListarProdutos();
-			break;
-		case 'n':
-			menuInicial();
-
-		default:menuInicial();
-		break;
-		}
-		sc.close();
-
+		menus();
 	}
 
 
 
 
-	
+//menu de consultar produto
 
 	private void consultProduct () {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Colocar o id do produto:");
-		
-		long id = sc.nextLong();
-		sc.nextLine();
-		Product productToBeConsult = productRepository1.consultById((long)id);
-		
-		System.out.println("produto: "+ productToBeConsult.toString());
-		
-		
-		System.out.println("quer voltar ao menu Produtos? y ou n");
-		char opcao= sc.nextLine().charAt(0);
 
-		switch (opcao) {
-		case 'y':
+		long id = sc.nextLong();
+		
+		if(productRepository1.consultById(id)!=null) {
+			Product productToBeConsult = productRepository1.consultById((long)id);
+
+			System.out.println("produto: "+ productToBeConsult.toString());
+		}
+		else {
+			System.out.println("Esse id de produto não existe");
+			consultProduct();
+		}
+		sc.nextLine();
+	
+		menus();
+
+	}
+//menu remover produto
+	
+	private void removeProduct() {
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Colocar o id do produto a remover:");
+		long id= sc.nextLong();
+		sc.nextLine();
+		
+		if(productRepository1.consultById(id)!=null) {
+			//Product productToRemove = 
+					productRepository1.removeById(id);
+		}
+		else {
+			System.out.println("Esse id não existe!!!");
+			removeProduct();
+		}
+		
+		menus();
+	}
+
+/*menu de prateleiras */
+	private  void menuListarPrateleiras() {
+		System.out.println("Lista de Shelf´s:");
+		Iterator <Shelf> ShelfList = shelfRepository1.consultAll().iterator();
+		while(ShelfList.hasNext()) {
+		System.out.println(ShelfList.next());
+		}
+		
+		
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("1) Criar nova prateleira");
+		System.out.println("2) Editar prateleira existente");
+		System.out.println("3) Consultar o detalhe da prateleria");
+		System.out.println("4) Remover prateleira");
+		System.out.println("5) Voltar ao ecra anterior");
+		System.out.println("Escolha a opcao:");
+
+		char opcao = sc.nextLine().charAt(0);
+
+		switch(opcao) {
+		case '1':
+			System.out.println("1) Criar nova prateleira");
+			newShelf();
+			break;
+		case '2':
+			System.out.println("2) Editar prateleira existente");
+			editShelf();
+			break;
+		case '3':
+			System.out.println("3) Consultar o detalhe da prateleria");
+			consultShelf();
+			break;
+		case '4':
+			System.out.println("4) Remover prateleira");
+			removeShelf();
+			break;
+		case '5':
+			menuInicial();break;
+		default: 	
+			System.out.println("erro:escolha so opcao 1, 2, 3, 4 ou 5");
 			menuListarProdutos();
 			break;
-		case 'n':
-			menuInicial();
 
-		default:menuInicial();
-		break;
+
 		}
 		sc.close();
-		
-		
 	}
+	
+	private void newShelf() {
+		
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("colocar a capacidade");
+		String capacidade = sc.nextLine();
+		int caps= Integer.parseInt(capacidade);
+		
+		
+		System.out.println("colocar o preco do Aluger");
+		String precoAluguer = sc.nextLine();
+		double precoAluguerS = Double.parseDouble(precoAluguer);
+		
+		Shelf shelf1= new Shelf(caps, null, precoAluguerS);
+		shelfRepository1.saveId(shelf1);
+		
+		System.out.println(shelf1.toString());
+		
+		menus();
+	}
+	
+	private void editShelf() {
+		menus();
+	}
+	
+	private void consultShelf() {
+		menus();
+	}
+	
+	private void removeShelf() {
+
+		menus();
+	}
+
+
 }
+

@@ -45,6 +45,13 @@ public class Shelf extends Entity {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Shelf "+ this.getId()+" [capacidade=" + capacidade + ", produtoAlberga=" + produtoAlberga + ", precoAluguer="
+				+ precoAluguer + "]";
+	}
+
+
 	
 
 	
