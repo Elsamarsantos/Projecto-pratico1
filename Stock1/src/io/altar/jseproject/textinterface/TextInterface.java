@@ -59,8 +59,10 @@ public class TextInterface {
 			break;
 		case '1':
 			menuInicial();
+			break;
 		case '3':
 			menuListarPrateleiras();
+			break;
 
 		default:menuInicial();
 		break;
@@ -171,7 +173,9 @@ public class TextInterface {
 
 		}
 		
-		Product product1= new Product(null, valorDesconto, iva, pvp);
+	
+			
+		Product product1= new Product(valorDesconto, iva, pvp);
 		
 		productRepository1.saveId(product1);
 	
@@ -234,7 +238,7 @@ public class TextInterface {
 			}
 
 
-			productRepository1.editById(productToBeEdited);
+		
 			System.out.println("novo producto: "+ productToBeEdited.toString());
 
 
@@ -258,17 +262,31 @@ public class TextInterface {
 		System.out.println("Colocar o id do produto:");
 
 		long id = sc.nextLong();
+		sc.nextLine();
 		
 		if(productRepository1.consultById(id)!=null) {
 			Product productToBeConsult = productRepository1.consultById((long)id);
 
-			System.out.println("produto: "+ productToBeConsult.toString());
+			System.out.println("Produto: "+ productToBeConsult.toString());
 		}
 		else {
-			System.out.println("Esse id de produto não existe");
-			consultProduct();
+			System.out.println("Esse id de produto nao existe");
+			System.out.println("continuar a consulta(1) ou ir para menu(2)?");
+			char opcao = sc.nextLine().charAt(0);
+			switch (opcao) {
+			case '1':
+				consultProduct();
+				break;
+			case '2':
+				menus();
+				break;
+
+			default:consultProduct();
+				break;
+			}
+			
 		}
-		sc.nextLine();
+		
 	
 		menus();
 
@@ -280,22 +298,43 @@ public class TextInterface {
 		System.out.println("Colocar o id do produto a remover:");
 		long id= sc.nextLong();
 		sc.nextLine();
-		
 		if(productRepository1.consultById(id)!=null) {
-			//Product productToRemove = 
-					productRepository1.removeById(id);
-		}
-		else {
-			System.out.println("Esse id não existe!!!");
+
+			Product consultById = productRepository1.consultById(id);
+
+			System.out.println("o produto a remover e esta: " + consultById.toString());
+			System.out.println("Quer remover? y ou n");
+			char remove = Character.toLowerCase(sc.nextLine().charAt(0));
+
+			switch (remove) {
+			case 'y':
+				productRepository1.removeById(id);
+				productRepository1.;
+				System.out.println("foi removida o produto.");
+				menus();
+				break;
+
+			case 'n':
+				menus();
+				break;
+			default:removeProduct();
+			break;
+
+			}
+
+		}else {
+			System.out.println("Esse id nao existe!!!");
 			removeProduct();
 		}
-		
-		menus();
+		sc.close();
+		//menus();
 	}
 
 /*menu de prateleiras */
+	
+	//lista das prateleiras
 	private  void menuListarPrateleiras() {
-		System.out.println("Lista de Shelf´s:");
+		System.out.println("Lista de Shelfs:");
 		Iterator <Shelf> ShelfList = shelfRepository1.consultAll().iterator();
 		while(ShelfList.hasNext()) {
 		System.out.println(ShelfList.next());
@@ -341,39 +380,132 @@ public class TextInterface {
 		}
 		sc.close();
 	}
-	
+//criar novas prateleiras
 	private void newShelf() {
-		
-		
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("colocar a capacidade");
 		String capacidade = sc.nextLine();
 		int caps= Integer.parseInt(capacidade);
 		
+		System.out.println("colocar o produto que alberga");
+		long id= sc.nextLong();
+		sc.nextLine();
+		Product idProduct = productRepository1.consultById(id);
 		
 		System.out.println("colocar o preco do Aluger");
 		String precoAluguer = sc.nextLine();
 		double precoAluguerS = Double.parseDouble(precoAluguer);
 		
-		Shelf shelf1= new Shelf(caps, null, precoAluguerS);
+		Shelf shelf1= new Shelf(caps, idProduct, precoAluguerS);
 		shelfRepository1.saveId(shelf1);
-		
+		idProduct.addToListShelves(shelf1);
 		System.out.println(shelf1.toString());
 		
 		menus();
 	}
+//editar prateleira
 	
 	private void editShelf() {
-		menus();
-	}
-	
-	private void consultShelf() {
-		menus();
-	}
-	
-	private void removeShelf() {
+				
+		Scanner sc= new Scanner (System.in);
+		System.out.println("Qual o Id do produto a alterar");
+		long id = sc.nextLong();
+		sc.nextLine();
+		
+		if(shelfRepository1.consultById(id)!=null) {
+			Shelf shelfToEdited = shelfRepository1.consultById(id);
+			
+			System.out.println("novo valor de capacidade");
+			String capacidade = sc.nextLine();
+			
+			if(capacidade.length()==0) {
+				int capacidadeNew= shelfRepository1.consultById(id).getCapacidade();
+				shelfToEdited.setCapacidade(capacidadeNew);
+			}
 
+			else{
+				int capacidadeNew= Integer.parseInt(capacidade);
+				shelfToEdited.setCapacidade(capacidadeNew);	
+			}
+			
+			System.out.println("novo valor de preco do Aluguer");
+			String precoAluguer = sc.nextLine();
+			
+			if(precoAluguer.length()==0) {
+				double precoAluguerNew= shelfRepository1.consultById(id).getPrecoAluguer();
+				shelfToEdited.setPrecoAluguer(precoAluguerNew);
+			}
+
+			else{
+				double precoAluguerNew= Double.parseDouble(precoAluguer);
+				shelfToEdited.setPrecoAluguer(precoAluguerNew);	
+			}
+		
+			
+		}else {
+			System.out.println("Esse Id de Shelf nao existe!!!");
+			editShelf();
+			
+		}sc.close();
+		
+	
+		menus();
+	}
+//consulta prateleiras
+	private void consultShelf() {
+						
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Coloque o id do produto a pesquisar ");
+		long id= sc.nextLong();;
+		sc.nextLine();
+		
+		if(shelfRepository1.consultById(id)!=null) {
+			Shelf shelfconsult = shelfRepository1.consultById(id);
+			
+			System.out.println("Shelf: " + shelfconsult.toString());
+			
+		}else {
+			System.out.println("Essa shelf nao existe");
+			consultShelf();
+		}sc.close();
+		
+		menus();
+	}
+
+//remover prateleiras
+	private void removeShelf() {
+		Scanner sc = new Scanner (System.in);
+		System.out.println("Coloque o id do produto a remover ");
+		long id = sc.nextLong();
+		sc.nextLine();
+		if(shelfRepository1.consultById(id)!=null) {	
+			Shelf shelfconsult = shelfRepository1.consultById(id);
+			System.out.println("A Shelf a remover e esta: " + shelfconsult.toString());
+			System.out.println("Quer remover? y ou n");
+			char remove = Character.toLowerCase(sc.nextLine().charAt(0));
+
+			switch (remove) {
+			case 'y':
+				shelfRepository1.removeById(id);
+				System.out.println("foi removida a shelf.");
+				menus();
+				break;
+
+			case 'n':
+				menus();
+				break;
+
+			default:removeShelf();
+			break;
+			}
+			
+		}else {
+			System.out.println("Esse id nao existe!!!");
+			removeProduct();
+		}
+		
+		sc.close();
 		menus();
 	}
 

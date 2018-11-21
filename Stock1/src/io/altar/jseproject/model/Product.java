@@ -1,28 +1,39 @@
 package io.altar.jseproject.model;
 
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Product extends Entity {
 	
-	private Shelf[] listShelfIn;
+	private List<Shelf> listShelfIn;
 	private double valorDesconto;
 	private double iva;
 	private double pvp;
 	
-	public Product(Shelf[] listShelfIn, double valorDesconto, double iva, double pvp) {
+	public Product( double valorDesconto, double iva, double pvp) {
 		
-		this.listShelfIn = listShelfIn;
+		this.listShelfIn = new ArrayList<Shelf>();
 		this.valorDesconto = valorDesconto;
 		this.iva = iva;
 		this.pvp = pvp;
 	}
 
-	public Shelf[] getListShelfIn() {
+	public List<Shelf> getListShelfIn() {
 		return listShelfIn;
 	}
 
-	public void setListShelfIn(Shelf[] listShelfIn) {
+	public void setListShelfIn(List<Shelf> listShelfIn) {
 		this.listShelfIn = listShelfIn;
+	}
+	
+	public void addToListShelves(Shelf shelf) {
+		listShelfIn.add(shelf);
+	}
+	
+	public void removeShelf(Shelf shelf) {
+		listShelfIn.remove(shelf);
 	}
 
 	public double getValorDesconto() {
@@ -48,11 +59,20 @@ public class Product extends Entity {
 	public void setPvp(double pvp) {
 		this.pvp = pvp;
 	}
+	
+	private String getStringShelves() {
+		String str = "";
+		for(int i=0;i<listShelfIn.size();i++) {
+			str+=listShelfIn.get(i).getId();
+			str+=", ";
+		}
+		return str;
+	}
 
 	@Override
 	public String toString() {
-		return "Product"+this.getId()+" [listShelfIn=" + Arrays.toString(listShelfIn) + ", valorDesconto=" + valorDesconto + ", iva="
-				+ iva + ", pvp=" + pvp + "]";
+		return "Product id:"+this.getId()+" [Lista de prateleiras:" +getStringShelves() + ", valor do Desconto:" + valorDesconto + ", iva:"
+				+ iva + ", pvp:" + pvp + "]";
 	}
 	
 	
