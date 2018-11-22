@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.altar.jseproject.repositories.ShelfRepository;
+
 public class Product extends Entity {
 	
 	private List<Shelf> listShelfIn;

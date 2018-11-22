@@ -47,8 +47,12 @@ public class Shelf extends Entity {
 
 	@Override
 	public String toString() {
+		if(produtoAlberga!=null)
 		return "Shelf id:"+ this.getId()+" [capacidade:" + capacidade + ", Id do produto que Alberga:" + produtoAlberga.getId() + " preco do Aluguer:"
 				+ precoAluguer + "]";
+		else
+			return "Shelf id:"+ this.getId()+" [capacidade:" + capacidade + ", Id do produto que Alberga: nenhum"  + " preco do Aluguer:"
+			+ precoAluguer + "]";
 	}
 
 
