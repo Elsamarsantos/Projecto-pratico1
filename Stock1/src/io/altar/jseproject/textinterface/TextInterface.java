@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -300,17 +301,32 @@ public class TextInterface {
 		sc.nextLine();
 		if(productRepository1.consultById(id)!=null) {
 
-			Product consultById = productRepository1.consultById(id);
-
-			System.out.println("o produto a remover e esta: " + consultById.toString());
+			Product consultId = productRepository1.consultById(id);
+			
+			System.out.println(consultId.getListShelfIn());
+			List<Shelf> lista = consultId.getListShelfIn();
+			
+			
+			
+			System.out.println("o produto a remover e esta: " + consultId.toString());
 			System.out.println("Quer remover? y ou n");
 			char remove = Character.toLowerCase(sc.nextLine().charAt(0));
 
 			switch (remove) {
 			case 'y':
 				productRepository1.removeById(id);
-				productRepository1.;
-				System.out.println("foi removida o produto.");
+				long consultShelf=0;
+				
+				for(int i=0;i<lista.size();i++) {
+					consultShelf+=lista.get(i).getId();
+					Shelf shelfToRemove = shelfRepository1.consultById(consultShelf);
+					consultId.removeShelf(shelfToRemove);
+				
+				
+				}
+				
+				
+				System.out.println("foi removido o produto e a prateleira associada.");
 				menus();
 				break;
 
