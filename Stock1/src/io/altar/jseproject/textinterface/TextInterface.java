@@ -301,28 +301,27 @@ public class TextInterface {
 		sc.nextLine();
 		if(productRepository1.consultById(id)!=null) {
 
-			Product consultId = productRepository1.consultById(id);
+			Product consultProduct = productRepository1.consultById(id);
 			
-			System.out.println(consultId.getListShelfIn());
-			List<Shelf> lista = consultId.getListShelfIn();
+			System.out.println("prateleiras existente no produto"+consultProduct.getListShelfIn());
+			List<Shelf> lista = consultProduct.getListShelfIn();
 			
 			
 			
-			System.out.println("o produto a remover e esta: " + consultId.toString());
+			System.out.println("o produto a remover e esta: " + consultProduct.toString());
 			System.out.println("Quer remover? y ou n");
 			char remove = Character.toLowerCase(sc.nextLine().charAt(0));
 
 			switch (remove) {
 			case 'y':
 				productRepository1.removeById(id);
-				long consultShelf=0;
 				
 				for(int i=0;i<lista.size();i++) {
-					consultShelf+=lista.get(i).getId();
-					Shelf shelfToRemove = shelfRepository1.consultById(consultShelf);
-					consultId.removeShelf(shelfToRemove);
+				Shelf consultShelf = lista.get(i) ;
+				consultProduct.removeShelf(consultShelf);
 				
 				
+					
 				}
 				
 				
