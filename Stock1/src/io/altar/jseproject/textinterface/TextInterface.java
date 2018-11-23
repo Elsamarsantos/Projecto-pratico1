@@ -100,7 +100,7 @@ public class TextInterface {
 		switch(opcao) {
 		case '1':
 			System.out.println("1) Criar novo produtos");
-			newProdut();
+			newProduct();
 			
 			break;
 		case '2':
@@ -133,70 +133,56 @@ public class TextInterface {
 
 // menu o criar produto	
 	
-	private void newProdut() {
+	public void newProduct() {
 		
 		double valorDesconto=0;
 		double iva=0;
 		double pvp=0;
 		Scanner sc = new Scanner(System.in);
 		
+		
+		
 		System.out.println("colocar o valor de desconto:");
-		String valorDescontoS= sc.next(); 
-		sc.nextLine();
-		valorDesconto = Integer.parseInt(valorDescontoS);
+		try {
+
+			String valorDescontoS= sc.next(); 
+			sc.nextLine();
+			
+			valorDesconto = Integer.parseInt(valorDescontoS);
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			menus();
+
+		}
 
 		System.out.println("colocar o valor do iva:");
-		String ivaS= sc.next(); 
-		sc.nextLine();
-		iva = Double.parseDouble(ivaS);
+		try {
+
+			String ivaS= sc.next(); 
+			sc.nextLine();
+			iva = Double.parseDouble(ivaS);
+
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			menus();
+
+		}
+
 
 		System.out.println("colocar o valor do pvp:");
-		String pvpS= sc.next(); 
-		sc.nextLine();
-		pvp = Double.parseDouble(pvpS);
+		try {
 
-//		
-//		System.out.println("colocar o valor de desconto:");
-//		try {
-//
-//			String valorDescontoS= sc.next(); 
-//			sc.nextLine();
-//			
-//			valorDesconto = Integer.parseInt(valorDescontoS);
-//		}catch (Exception e) {
-//			System.out.println("Erro: "+ e);
-//			menus();
-//
-//		}
-//
-//		System.out.println("colocar o valor do iva:");
-//		try {
-//
-//			String ivaS= sc.next(); 
-//			sc.nextLine();
-//			iva = Double.parseDouble(ivaS);
-//
-//		}catch (Exception e) {
-//			System.out.println("Erro: "+ e);
-//			menus();
-//
-//		}
-//
-//
-//		System.out.println("colocar o valor do pvp:");
-//		try {
-//
-//			String pvpS= sc.next(); 
-//			sc.nextLine();
-//			pvp = Double.parseDouble(pvpS);
-//			
-//		}catch (Exception e) {
-//			System.out.println("Erro: "+ e);
-//			menus();
-//
-//
-//		}
-//		
+			String pvpS= sc.next(); 
+			sc.nextLine();
+			pvp = Double.parseDouble(pvpS);
+			
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			menus();
+
+
+		}
+		
 		
 			
 		Product product1= new Product(valorDesconto, iva, pvp);
@@ -416,26 +402,60 @@ public class TextInterface {
 	}
 //criar novas prateleiras
 	private void newShelf() {
+		
+		int caps =0;
+		Product idProduct =null;
+		double precoAluguerS=0;
+
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("colocar a capacidade");
-		String capacidade = sc.nextLine();
-		int caps= Integer.parseInt(capacidade);
-		
+		try {
+			String capacidade = sc.nextLine();
+			caps= Integer.parseInt(capacidade);
+
+		}
+		catch(Exception e) {
+			System.out.println("Erro: "+ e);
+			menus();
+
+		}
+
+
+
 		System.out.println("colocar o produto que alberga");
-		long id= sc.nextLong();
-		sc.nextLine();
-		Product idProduct = productRepository1.consultById(id);
+		System.out.println("Caso nao queira colocar, carregue no Enter");
+		String id = sc.nextLine();
+				
+		if(id.length()!=0) {
+			long ids = Long.parseLong(id);
+			if(productRepository1.consultById(ids)!=null) {
+				idProduct = productRepository1.consultById(ids);
+				
+			} else {
+				System.out.println("esse id de produto nao existe");
+
+
+			}
+		}
 		
+
 		System.out.println("colocar o preco do Aluger");
-		String precoAluguer = sc.nextLine();
-		double precoAluguerS = Double.parseDouble(precoAluguer);
-		
+		try {
+			String precoAluguer = sc.nextLine();
+			precoAluguerS = Double.parseDouble(precoAluguer);
+		}catch (Exception e) {
+			System.out.println("Erro: "+ e);
+			menus();
+		}
+
+
+
 		Shelf shelf1= new Shelf(caps, idProduct, precoAluguerS);
 		shelfRepository1.saveId(shelf1);
 		idProduct.addToListShelves(shelf1);
 		System.out.println(shelf1.toString());
-		
+
 		menus();
 		sc.close();
 		
@@ -482,11 +502,8 @@ public class TextInterface {
 				productIdNew.addToListShelves(shelfToEdited);
 
 
-
-
-
 			}
-//experience				
+				
 			
 			
 			
