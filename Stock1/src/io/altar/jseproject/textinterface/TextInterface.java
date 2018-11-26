@@ -312,7 +312,7 @@ public class TextInterface {
 			
 			
 			
-			System.out.println("o produto a remover e esta: " + consultProduct.toString());
+			System.out.println("o produto a remover e este: " + consultProduct.toString());
 			System.out.println("Quer remover? y ou n");
 			char remove = Character.toLowerCase(sc.nextLine().charAt(0));
 
@@ -460,7 +460,11 @@ public class TextInterface {
 
 		Shelf shelf1= new Shelf(caps, idProduct, precoAluguer);
 		shelfRepository1.saveId(shelf1);
-		idProduct.addToListShelves(shelf1);
+		
+		if(idProduct != null){
+		idProduct.addToListShelves(shelf1);	
+		}
+		
 		System.out.println(shelf1.toString());
 
 		menus();
@@ -513,8 +517,9 @@ public class TextInterface {
 			if(productId.length()!=0) {
 
 				Product productToChange = shelfToEdited.getProdutoAlberga();
+				if(productToChange!=null) {
 				productToChange.removeShelf(shelfToEdited);
-
+				}
 				shelfToEdited.getPrecoAluguer();
 				Long product2 = Long.parseLong(productId);
 				Product productIdNew = productRepository1.consultById(product2);
@@ -545,7 +550,7 @@ public class TextInterface {
 						System.out.println("Erro: coloque o valor correcto.");
 						sc.nextLine();
 					}
-				}while(continueInput1 = true);
+				}while(continueInput1);
 			}
 		}else {
 			System.out.println("Esse Id de Shelf nao existe!!!");
