@@ -3,6 +3,7 @@ package io.altar.jseproject.textinterface;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -140,51 +141,49 @@ public class TextInterface {
 		double pvp=0;
 		Scanner sc = new Scanner(System.in);
 		
-		
-		
-		System.out.println("colocar o valor de desconto:");
+		boolean continueInput = true;
+		do {
 		try {
-
-			String valorDescontoS= sc.next(); 
+			System.out.println("colocar o valor de desconto:");
+			valorDesconto = sc.nextDouble();
 			sc.nextLine();
-			
-			valorDesconto = Integer.parseInt(valorDescontoS);
-		}catch (Exception e) {
-			System.out.println("Erro: "+ e);
-			menus();
-
-		}
-
-		System.out.println("colocar o valor do iva:");
-		try {
-
-			String ivaS= sc.next(); 
+			continueInput = false;
+		}catch (InputMismatchException ex) {
+			System.out.println("Erro: coloque o valor correcto.");
 			sc.nextLine();
-			iva = Double.parseDouble(ivaS);
-
-		}catch (Exception e) {
-			System.out.println("Erro: "+ e);
-			menus();
-
 		}
-
-
-		System.out.println("colocar o valor do pvp:");
-		try {
-
-			String pvpS= sc.next(); 
-			sc.nextLine();
-			pvp = Double.parseDouble(pvpS);
-			
-		}catch (Exception e) {
-			System.out.println("Erro: "+ e);
-			menus();
-
-
-		}
+		} while (continueInput);
 		
-		
+	
+		boolean continueInput1 = true;
+		do {
+		try {
+			System.out.println("colocar o valor do iva:");
+			iva = sc.nextDouble();
+			sc.nextLine();
+			continueInput1 = false;
 			
+		}catch (InputMismatchException ex) {
+			System.out.println("Erro: coloque o valor correcto.");
+			sc.nextLine();
+		}
+		} while (continueInput1);
+		
+		boolean continueInput2 = true;
+		do {
+		try {
+			System.out.println("colocar o valor do pvp:");
+			pvp =sc.nextDouble(); 
+			sc.nextLine();
+			continueInput2 = false;
+		}catch (InputMismatchException ex) {
+			System.out.println("Erro: coloque o valor correcto.");
+			sc.nextLine();
+		}
+		} while (continueInput2);
+			
+	
+		
 		Product product1= new Product(valorDesconto, iva, pvp);
 		
 		productRepository1.saveId(product1);
@@ -404,54 +403,70 @@ public class TextInterface {
 	private void newShelf() {
 		
 		int caps =0;
-		Product idProduct =null;
-		double precoAluguerS=0;
-
+		Product idProduct=null;
+		double precoAluguer=0;
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("colocar a capacidade");
+		boolean continueInput = true;
+		do {
+		
 		try {
-			String capacidade = sc.nextLine();
-			caps= Integer.parseInt(capacidade);
+			System.out.println("Coloque o valor de capacidade");
+			caps= sc.nextInt();
+			sc.nextLine();
+			continueInput = false;
 
+		}catch (InputMismatchException ex) {
+			System.out.println("Erro: coloque o valor correcto.");
+			sc.nextLine();
 		}
-		catch(Exception e) {
-			System.out.println("Erro: "+ e);
-			menus();
-
-		}
-
-
-
+		} while (continueInput);
+			
+		
+		boolean continueInput1= true;
+		
 		System.out.println("colocar o produto que alberga");
 		System.out.println("Caso nao queira colocar, carregue no Enter");
 		String id = sc.nextLine();
-				
+
 		if(id.length()!=0) {
-			long ids = Long.parseLong(id);
-			if(productRepository1.consultById(ids)!=null) {
-				idProduct = productRepository1.consultById(ids);
-				
-			} else {
-				System.out.println("esse id de produto nao existe");
+			do {
+				try {
+					long ids = Long.parseLong(id);
+					if(productRepository1.consultById(ids)!=null) {
+						idProduct = productRepository1.consultById(ids);
+						continueInput1=false;
+					}
+				}catch (InputMismatchException ex) {
+					System.out.println("esse id de produto nao existe");
+					sc.nextLine();
+				}
 
+			}while (continueInput1);
 
-			}
-		}
+	}
 		
 
-		System.out.println("colocar o preco do Aluger");
+
+		boolean continueInput2 = true;
+
+		do {
 		try {
-			String precoAluguer = sc.nextLine();
-			precoAluguerS = Double.parseDouble(precoAluguer);
-		}catch (Exception e) {
-			System.out.println("Erro: "+ e);
-			menus();
+			System.out.println("colocar o preco do Aluger");
+			precoAluguer =sc.nextDouble(); 
+			sc.nextLine();
+			continueInput2=false;
+
+
+		}catch (InputMismatchException ex) {
+			System.out.println("Erro: coloque o valor correcto.");
+			sc.nextLine();
 		}
+		} while (continueInput2);
 
 
 
-		Shelf shelf1= new Shelf(caps, idProduct, precoAluguerS);
+		Shelf shelf1= new Shelf(caps, idProduct, precoAluguer);
 		shelfRepository1.saveId(shelf1);
 		idProduct.addToListShelves(shelf1);
 		System.out.println(shelf1.toString());
