@@ -245,12 +245,8 @@ public class TextInterface {
 				productToBeEdited.setPvp(pvpNew);
 
 			}
-
-
 		
 			System.out.println("novo producto: "+ productToBeEdited.toString());
-
-
 
 		}
 		else {
@@ -423,30 +419,26 @@ public class TextInterface {
 		} while (continueInput);
 			
 		
-		boolean continueInput1= true;
+		
 		
 		System.out.println("colocar o produto que alberga");
 		System.out.println("Caso nao queira colocar, carregue no Enter");
 		String id = sc.nextLine();
 
 		if(id.length()!=0) {
-			do {
-				try {
-					long ids = Long.parseLong(id);
-					if(productRepository1.consultById(ids)!=null) {
-						idProduct = productRepository1.consultById(ids);
-						continueInput1=false;
-					}
-				}catch (InputMismatchException ex) {
-					System.out.println("esse id de produto nao existe");
-					sc.nextLine();
-				}
 
-			}while (continueInput1);
+			long ids = Long.parseLong(id);
+			if(productRepository1.consultById(ids)!=null) {
+				idProduct = productRepository1.consultById(ids);
 
-	}
-		
+			} 
+			else {
 
+				System.out.println("esse id de produto nao existe");
+				sc.nextLine();
+
+			}
+		}
 
 		boolean continueInput2 = true;
 
@@ -485,6 +477,7 @@ public class TextInterface {
 		long id = sc.nextLong();
 		sc.nextLine();
 		
+		
 		if(shelfRepository1.consultById(id)!=null) {
 			Shelf shelfToEdited = shelfRepository1.consultById(id);
 			
@@ -496,12 +489,24 @@ public class TextInterface {
 				shelfToEdited.setCapacidade(capacidadeNew);
 			}
 
+
 			else{
-				int capacidadeNew= Integer.parseInt(capacidade);
-				shelfToEdited.setCapacidade(capacidadeNew);	
+				boolean continueInput = true;
+				do {
+					try {
+						int capacidadeNew= Integer.parseInt(capacidade);
+						shelfToEdited.setCapacidade(capacidadeNew);	
+						continueInput = false;
+					}catch (InputMismatchException ex){
+						System.out.println("Erro: coloque o valor correcto.");
+						sc.nextLine();
+
+
+					}
+				}while (continueInput);
 			}
-			
-//alterar o product da prateleira
+
+			//alterar o product da prateleira
 			System.out.println("novo produto na prateleira");
 			String productId = sc.nextLine();
 
@@ -518,15 +523,10 @@ public class TextInterface {
 
 
 			}
-				
-			
-			
-			
-
 
 			System.out.println("novo valor de preco do Aluguer");
 			String precoAluguer = sc.nextLine();
-			
+
 			if(precoAluguer.length()==0) {
 				double precoAluguerNew= shelfRepository1.consultById(id).getPrecoAluguer();
 				shelfToEdited.setPrecoAluguer(precoAluguerNew);
@@ -534,19 +534,27 @@ public class TextInterface {
 
 
 			else{
-				double precoAluguerNew= Double.parseDouble(precoAluguer);
-				shelfToEdited.setPrecoAluguer(precoAluguerNew);	
+				boolean continueInput1 = true;
+				do {
+					try {
+						double precoAluguerNew= Double.parseDouble(precoAluguer);
+						shelfToEdited.setPrecoAluguer(precoAluguerNew);	
+						continueInput1 = false;
+					}
+					catch (InputMismatchException ex){
+						System.out.println("Erro: coloque o valor correcto.");
+						sc.nextLine();
+					}
+				}while(continueInput1 = true);
 			}
-			
-			
 		}else {
 			System.out.println("Esse Id de Shelf nao existe!!!");
-			
-			
+			editShelf();
+
 		}
 		menus();
 		sc.close();
-		
+
 	}
 //consulta prateleiras
 	private void consultShelf() {
