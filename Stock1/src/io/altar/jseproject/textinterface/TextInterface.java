@@ -318,15 +318,9 @@ public class TextInterface {
 //editar prateleira
 	
 	private void editShelf() {
-				
-		Scanner sc= new Scanner (System.in);
-		System.out.println("Qual o Id da prateleira a alterar");
-		long id = sc.nextLong();
-		sc.nextLine();
 		
 		
-		if(shelfRepository1.consultById(id)!=null) {
-			Shelf shelfToEdited = shelfRepository1.consultById(id);
+			Shelf shelfToEdited = scannerUtils.getShelfById("Qual o Id da prateleira a alterar",true);
 			
 			int capacidade= scannerUtils.getIntScanner("novo valor de capacidade", true);
 			if(capacidade!=-1) {
@@ -335,18 +329,24 @@ public class TextInterface {
 			
 			
 			//alterar o product da prateleira
-			System.out.println("novo produto na prateleira");
-			String productId = sc.nextLine();
 
-			if(productId.length()!=0) {
+			
+			long id=scannerUtils.getProductToEnter("Quer alterar o produto na prateleira?Enter para nao",true);
+			
+			if(id !=-1) {
 
+				Product productId = scannerUtils.getProductById("novo produto na prateleira",true);
+				
+				Long idProduct = productId.getId();
 				Product productToChange = shelfToEdited.getProdutoAlberga();
+				
 				if(productToChange!=null) {
 				productToChange.removeShelf(shelfToEdited);
 				}
 				shelfToEdited.getPrecoAluguer();
-				Long product2 = Long.parseLong(productId);
-				Product productIdNew = productRepository1.consultById(product2);
+				
+				
+				Product productIdNew = productRepository1.consultById(idProduct);
 				shelfToEdited.setProdutoAlberga(productIdNew);
 				productIdNew.addToListShelves(shelfToEdited);
 
@@ -359,13 +359,11 @@ public class TextInterface {
 			}
 			
 			
-		}else {
-			System.out.println("Esse Id de Shelf nao existe!!!");
-			editShelf();
+		
 
-		}
+		
 		menus();
-		sc.close();
+		
 
 	}
 //consulta prateleiras

@@ -3,46 +3,59 @@ package io.altar.jseproject.textinterface;
 import java.util.Scanner;
 
 import io.altar.jseproject.model.Product;
+import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.repositories.ProductRepository;
+import io.altar.jseproject.repositories.ShelfRepository;
 
 public class ScannerUtils {
 	private  Scanner sc =new Scanner(System.in);
 	ProductRepository productRepository1 = ProductRepository.getInstance();
+	ShelfRepository shelfRepository1= ShelfRepository.getInstance();
 	
 // definir qual o tipo de input	
 	private  boolean isType(String input, String type) {
+		Scanner lineSc = new Scanner(input);
+		boolean result = false;
+		
 		switch (type) {
 		case "Integer":
-			try {
-				Integer.parseInt(input);
-				return true;
-			}catch (NumberFormatException e) {
+			if (lineSc.hasNextInt()) {
+				result = true;
+			} else {
 				System.out.println("Valor errado: tem de ser um int");
-				return false;
 			}
+			break;
+			
+			
 		case "Double":
-			try {
-				Double.parseDouble(input);
-				return true;
-			}catch (NumberFormatException e) {
+			if (lineSc.hasNextDouble()) {
+				result = true;
+			} else {
 				System.out.println("Valor errado: tem de ser um double");
-				return false;
+				
 			}
+			break;
 		case "Long":
-			try {
-				Long.parseLong(input);
-				return true;
-			}catch (NumberFormatException e) {
+			if (lineSc.hasNextLong()) {
+				result = true;
+			} else {
 				System.out.println("Valor errado: tem de ser um long");
-				return false;
+				
 			}
-
+			break;
 		default:
-			return false;
+			result= true;
 
 
 		}
+		lineSc.close();
+		return result;
+		
 	}
+	
+	
+	
+	
 	//metodo para retornar um double
 	public double  getDoubleScanner(String mensage) {
 		return getDoubleScanner(mensage,false);
@@ -53,7 +66,7 @@ public class ScannerUtils {
 		do {
 			System.out.println(mensage);
 			input=sc.nextLine();
-			if(canBeNull && input.equals("")) { //excecao quando o input é um enter
+			if(canBeNull && input.equals("")) { //excecao quando o input ï¿½ um enter
 				return -1;
 			}
 
@@ -93,7 +106,7 @@ public class ScannerUtils {
 		do {
 			System.out.println(mensage);
 			input=sc.nextLine();
-			if(canBeNull && input.equals("")) { //excecao quando o input é um enter
+			if(canBeNull && input.equals("")) { //excecao quando o input ï¿½ um enter
 				return -1;
 			}
 			
@@ -112,7 +125,7 @@ public class ScannerUtils {
 			do {
 				System.out.println(mensage);
 				input=sc.nextLine();
-				if(canBeNull && input.equals("")) { //excecao quando o input é um enter
+				if(canBeNull && input.equals("")) { //excecao quando o input ï¿½ um enter
 					return -1;
 				}
 				
@@ -123,19 +136,55 @@ public class ScannerUtils {
 		}
 		
 //metodo para procurar por id product
-		public Product getProductById(String message,boolean canBeNull) {
+		public Product getProductById(String mensage,boolean canBeNull) {
 			Long id;
 			Product productById;
 			do {
-				id = getLongScanner(message,canBeNull);
+				id = getLongScanner(mensage,canBeNull);
 				productById=productRepository1.consultById(id);
-				
-				
+			
+
 			} while (productById==null);
-				
+
 			return productById;
 		}
 		
 		
+		
+		
+		public long getProductToEnter(String mensage,boolean canBeNull) {
+			String id;
+			
+			do {
+				System.out.println(mensage);
+				id= sc.nextLine();
+				if(canBeNull && id.equals("")) {
+					return -1;
+				}
+				
+				
+			} while (!isType(id,"Long"));
+			
+			return Long.parseLong(id);
+		}
+		
+		
+		
+		
+		
+//metodo para procurar por id shelf
+		public Shelf getShelfById(String message,boolean canBeNull) {
+			Long id;
+			Shelf shelfById;
+			do {
+				id = getLongScanner(message,canBeNull);
+				shelfById=shelfRepository1.consultById(id);
+
+
+			} while (shelfById==null);
+
+			return shelfById;
+		}
+
 		
 }
