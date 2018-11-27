@@ -2,8 +2,12 @@ package io.altar.jseproject.textinterface;
 
 import java.util.Scanner;
 
+import io.altar.jseproject.model.Product;
+import io.altar.jseproject.repositories.ProductRepository;
+
 public class ScannerUtils {
 	private  Scanner sc =new Scanner(System.in);
+	ProductRepository productRepository1 = ProductRepository.getInstance();
 	
 // definir qual o tipo de input	
 	private  boolean isType(String input, String type) {
@@ -117,4 +121,21 @@ public class ScannerUtils {
 			return Integer.parseInt(input);
 			
 		}
+		
+//metodo para procurar por id product
+		public Product getProductById(String message,boolean canBeNull) {
+			Long id;
+			Product productById;
+			do {
+				id = getLongScanner(message,canBeNull);
+				productById=productRepository1.consultById(id);
+				
+				
+			} while (productById==null);
+				
+			return productById;
+		}
+		
+		
+		
 }

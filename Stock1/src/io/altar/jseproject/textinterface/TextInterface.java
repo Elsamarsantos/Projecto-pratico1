@@ -128,7 +128,6 @@ public class TextInterface {
 		
 		}
 		sc.close();
-		
 
 	}
 
@@ -153,15 +152,8 @@ public class TextInterface {
 // comeca o editar produto	
 	
 	private void editProduct() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Colocar o id do produto:");
-		Long id = sc.nextLong();
-		sc.nextLine();
 
-		//primeiro temos de saber se o produto existe
-
-		if(productRepository1.consultById((long)id)!=null) {
-			Product productToBeEdited = productRepository1.consultById((long)id);
+			Product productToBeEdited = scannerUtils.getProductById("Coloque o id do produto a editar",true);
 
 			double valorDesconto = scannerUtils.getValidDoubleScanner("diga qual o valor do desconto", 100, true);
 			if(valorDesconto!=-1) {
@@ -179,13 +171,7 @@ public class TextInterface {
 			}
 					
 			System.out.println("novo producto: "+ productToBeEdited.toString());
-
-		}
-		else {
-			System.out.println("Esse produto nao existe" + id);
-
-		}
-		
+	
 		menus();
 	}
 
@@ -195,85 +181,46 @@ public class TextInterface {
 //menu de consultar produto
 
 	private void consultProduct () {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Colocar o id do produto:");
-
-		long id = sc.nextLong();
-		sc.nextLine();
-		
-		if(productRepository1.consultById(id)!=null) {
-			Product productToBeConsult = productRepository1.consultById((long)id);
-
-			System.out.println("Produto: "+ productToBeConsult.toString());
-		}
-		else {
-			System.out.println("Esse id de produto nao existe");
-			System.out.println("continuar a consulta(1) ou ir para menu(2)?");
-			char opcao = sc.nextLine().charAt(0);
-			switch (opcao) {
-			case '1':
-				consultProduct();
-				break;
-			case '2':
-				menus();
-				break;
-
-			default:consultProduct();
-				break;
-			}
-			
-		}
-		
-	
+		Product productToBeConsult = scannerUtils.getProductById("Coloque o id do produto a consultar",true);
+		System.out.println("Produto: "+ productToBeConsult.toString());
 		menus();
 
 	}
-//menu remover produto
 	
+//menu remover produto
 	private void removeProduct() {
-		Scanner sc= new Scanner(System.in);
-		System.out.println("Colocar o id do produto a remover:");
-		long id= sc.nextLong();
-		sc.nextLine();
-		if(productRepository1.consultById(id)!=null) {
 
-			Product consultProduct = productRepository1.consultById(id);
-			
-			System.out.println("prateleiras existente no produto"+consultProduct.getListShelfIn());
-			Iterator<Shelf> shelfList = consultProduct.getListShelfIn().iterator();
+		Product consultProduct = scannerUtils.getProductById("Coloque o id do produto a editar",true);
+				System.out.println("prateleiras existente no produto"+consultProduct.getListShelfIn());
 		
-			System.out.println("o produto a remover e este: " + consultProduct.toString());
-			System.out.println("Quer remover? y ou n");
-			char remove = Character.toLowerCase(sc.nextLine().charAt(0));
+		Iterator<Shelf> shelfList = consultProduct.getListShelfIn().iterator();
 
-			switch (remove) {
-			case 'y':
-				while (shelfList.hasNext()){
+		System.out.println("o produto a remover e este: " + consultProduct.toString());
+		System.out.println("Quer remover? y ou n");
+		Scanner sc = new Scanner(System.in);
+		char remove = Character.toLowerCase(sc.nextLine().charAt(0));
 
-					shelfList.next().setProdutoAlberga(null);
-				}
-				productRepository1.removeById(id);
-				
-				System.out.println("foi removido o produto.");
-				menus();
-				break;
+		switch (remove) {
+		case 'y':
+			while (shelfList.hasNext()){
 
-			case 'n':
-				menus();
-				break;
-			default:menus();
+				shelfList.next().setProdutoAlberga(null);
+			}
+			productRepository1.removeById(consultProduct.getId());
 
+			System.out.println("foi removido o produto.");
+			menus();
 			break;
 
-			}
-
-		}else {
-			System.out.println("Esse id nao existe!!!");
+		case 'n':
 			menus();
+			break;
+		default:menus();
+		break;
 
 		}
-		sc.close();
-		
+		menus();
+
 	}
 
 /*menu de prateleiras */
