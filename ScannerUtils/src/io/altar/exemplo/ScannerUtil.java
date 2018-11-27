@@ -26,10 +26,10 @@ public class ScannerUtil {
 	
 	
 
-	public int getValidIntFromScanner(String msg, int max) {
+	public int getValidIntFromScanner(String msg, int max, boolean canBeNull) {
 		int result;
 		do {
-			result =getIntFromScanner(msg);
+			result =getIntFromScanner(msg,canBeNull);
 			if(result>max) {
 				System.out.println("o numero tem que ser menor que " + max);
 			}
@@ -41,16 +41,16 @@ public class ScannerUtil {
 		return result;
 	}
 	
-	public int getValidIntFromScanner(String msg, int[] ints) {
-		return getValidIntFromScanner(msg,ints,false);
+	public int getValidIntFromScanner(String msg, int max) {
+		return getValidIntFromScanner(msg,max,false);
 	}
 	
-	public int getValidIntFromScanner(String msg, int[] ints, boolean canBeNull) {
+	public int getValidIntFromScanner(String msg, int [] ivas) {
 		int result;
 		boolean validInt = false;
 		do {
-			result = getIntFromScanner(msg,canBeNull);
-			for (int i:ints) {
+			result = getIntFromScanner(msg,false);
+			for (int i:ivas) {
 				if(i == result) {
 					validInt = true;
 
@@ -58,7 +58,7 @@ public class ScannerUtil {
 			}
 			if (!validInt) {
 				String validString="";
-				for (int i:ints) {
+				for (int i:ivas) {
 					validString += " " + i;
 				}
 				System.out.println("Numero errado" + validString);

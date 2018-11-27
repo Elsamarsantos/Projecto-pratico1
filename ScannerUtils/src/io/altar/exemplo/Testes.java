@@ -30,16 +30,17 @@ public class Testes {
 
 	private void editProduct(Product product) {
 		System.out.println("Editar Product");
-		int[] ivas = new int[] {6,13,23};
-		int iva = scannerUtils.getIntFromScanner("Iva antigo:"+product.getIva(), ivas, true);
-		product.setIva(iva);	
 		
+		int iva = scannerUtils.getIntFromScanner("Iva antigo:"+product.getIva(), true);
+		if(iva !=-1) {
+		product.setIva(iva);	
+		}
 		int pvp = scannerUtils.getIntFromScanner("Pvp antigo:"+ product.getPvp(),true);
 		if(pvp !=-1) {
 		product.setPvp(pvp);
 		}
 		
-		int discount = scannerUtils.getValidIntFromScanner("discount antigo:" + product.getDiscount(),100),true;
+		int discount = scannerUtils.getValidIntFromScanner("discount antigo:" + product.getDiscount(),100,true);
 		product.setDiscount(discount);
 		
 
