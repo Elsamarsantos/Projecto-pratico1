@@ -1,13 +1,16 @@
-package io.altar.jseproject.textinterface;
+package io.altar.stateMachine.jseproject.textInterface.utils;
 
 import java.util.Scanner;
 
-import io.altar.jseproject.model.Product;
-import io.altar.jseproject.model.Shelf;
-import io.altar.jseproject.repositories.ProductRepository;
-import io.altar.jseproject.repositories.ShelfRepository;
+import io.altar.stateMachine.jseproject.model.Product;
+import io.altar.stateMachine.jseproject.model.Shelf;
+import io.altar.stateMachine.jseproject.repositories.ProductRepository;
+import io.altar.stateMachine.jseproject.repositories.ShelfRepository;
 
-public class ScannerUtils {
+
+
+public class ScannerUtilsState {
+
 	private  Scanner sc =new Scanner(System.in);
 	ProductRepository productRepository1 = ProductRepository.getInstance();
 	ShelfRepository shelfRepository1= ShelfRepository.getInstance();
@@ -43,9 +46,7 @@ public class ScannerUtils {
 				
 			}
 			break;
-		default:
-			result= true;
-
+	
 
 		}
 		lineSc.close();
@@ -135,6 +136,35 @@ public class ScannerUtils {
 			
 		}
 		
+		public int getValidIntFromScanner(String msg, int[] opcao) {
+			return getValidIntFromScanner(msg, opcao, false);
+		}
+		
+		public int getValidIntFromScanner(String msg, int[] ivas, boolean canBeNull) {
+			int result;
+			boolean validInt = false;
+			do {
+				result = getIntScanner(msg, canBeNull);
+				if (canBeNull && result == -1) {
+					return -1;
+				} else {
+					for (int i : ivas) {
+						if (result == i) {
+							validInt = true;
+						}
+					}
+					if (!validInt) {
+						String validString = "";
+						for (int i : ivas) {
+							validString += " " + i;
+						}
+						System.out.println("Numero errado tem de ser" + validString);
+					}
+				}
+			} while (!validInt);
+			return result;
+		}
+		
 //metodo para procurar por id product
 		public Product getProductById(String mensage,boolean canBeNull) {
 			Long id;
@@ -188,6 +218,7 @@ public class ScannerUtils {
 
 			return shelfById;
 		}
-
 		
+		
+
 }

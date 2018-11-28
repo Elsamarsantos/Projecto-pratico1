@@ -1,4 +1,4 @@
-package io.altar.jseproject.model;
+package io.altar.stateMachine.jseproject.model;
 
 public class Shelf extends Entity {
 	

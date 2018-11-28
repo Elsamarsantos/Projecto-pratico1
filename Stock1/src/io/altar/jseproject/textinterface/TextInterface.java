@@ -182,7 +182,11 @@ public class TextInterface {
 
 	private void consultProduct () {
 		Product productToBeConsult = scannerUtils.getProductById("Coloque o id do produto a consultar",true);
+		if (productToBeConsult==null) {
+			System.out.println("Esse produto nao existe");
+		}else {
 		System.out.println("Produto: "+ productToBeConsult.toString());
+		}
 		menus();
 
 	}
@@ -190,8 +194,12 @@ public class TextInterface {
 //menu remover produto
 	private void removeProduct() {
 
-		Product consultProduct = scannerUtils.getProductById("Coloque o id do produto a editar",true);
-				System.out.println("prateleiras existente no produto"+consultProduct.getListShelfIn());
+		Product consultProduct = scannerUtils.getProductById("Coloque o id do produto a remover",true);
+		if (consultProduct==null) {
+			System.out.println("Esse produto nao existe");
+		}else {
+		
+			System.out.println("prateleiras existente no produto"+consultProduct.getListShelfIn());
 		
 		Iterator<Shelf> shelfList = consultProduct.getListShelfIn().iterator();
 
@@ -218,6 +226,7 @@ public class TextInterface {
 		default:menus();
 		break;
 
+		}
 		}
 		menus();
 
@@ -330,12 +339,10 @@ public class TextInterface {
 			
 			//alterar o product da prateleira
 
+		
+			Product productId = scannerUtils.getProductById("novo produto na prateleira",true);
 			
-			long id=scannerUtils.getProductToEnter("Quer alterar o produto na prateleira?Enter para nao",true);
-			
-			if(id !=-1) {
-
-				Product productId = scannerUtils.getProductById("novo produto na prateleira",true);
+			if(productId !=null) {
 				
 				Long idProduct = productId.getId();
 				Product productToChange = shelfToEdited.getProdutoAlberga();
@@ -352,6 +359,7 @@ public class TextInterface {
 
 
 			}
+			
 
 			double precoAluguer = scannerUtils.getIntScanner("novo valor de preco do Aluguer", true);
 			if(precoAluguer!=-1) {

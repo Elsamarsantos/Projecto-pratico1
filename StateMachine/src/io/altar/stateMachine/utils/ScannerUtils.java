@@ -7,6 +7,7 @@ public class ScannerUtils {
 
 	public int getIntFromScanner(String msg, boolean canBeNull) {
 		String input;
+		
 		do {
 			System.out.println(msg);
 			input = sc.nextLine();
