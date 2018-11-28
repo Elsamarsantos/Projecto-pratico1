@@ -6,18 +6,11 @@ public class ConsultProduct implements States {
 	
 	public int execute() {
 		
-		Product productToBeConsult = scannerUtils.getProductById("Coloque o id do produto a consultar",true);
-		if (productToBeConsult==null) {
-			System.out.println("Esse produto nao existe");
-		}else {
+		Product productToBeConsult = scannerUtils.getProductById("Coloque o id do produto a consultar",true);		
 		System.out.println("Produto: "+ productToBeConsult.toString());
-		}
-		
 
-	
-	
-
-			}
+		return 1;
+	}
 	
 
 }

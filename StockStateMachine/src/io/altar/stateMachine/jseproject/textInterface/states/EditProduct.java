@@ -1,5 +1,32 @@
 package io.altar.stateMachine.jseproject.textInterface.states;
 
-public class EditProduct {
+import io.altar.stateMachine.jseproject.model.Product;
+
+public class EditProduct implements States{
+
+	@Override
+	public int execute() {
+
+		Product productToBeEdited = scannerUtils.getProductById("Coloque o id do produto a editar",true);
+
+		double valorDesconto = scannerUtils.getValidDoubleScanner("diga qual o valor do desconto", 100, true);
+		if(valorDesconto!=-1) {
+			productToBeEdited.setValorDesconto(valorDesconto);
+		}
+
+		double iva =scannerUtils.getValidDoubleScanner("diga qual o valor do iva", 100, true);
+		if(iva!=-1) {
+			productToBeEdited.setIva(iva);
+		}
+		
+		double pvp =scannerUtils.getDoubleScanner("diga qual o valor do pvp", true);
+		if(pvp!=-1) {
+			productToBeEdited.setPvp(pvp);
+		}
+				
+		System.out.println("novo producto: "+ productToBeEdited.toString());
+
+		return 1;
+	}
 
 }

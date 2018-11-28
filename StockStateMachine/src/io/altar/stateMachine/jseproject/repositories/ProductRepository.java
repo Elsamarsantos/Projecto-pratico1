@@ -6,6 +6,9 @@ public class ProductRepository extends EntityRepository<Product> {
 
 
 	private static final ProductRepository INSTANCE = new ProductRepository();
+	
+
+	
 
 	private ProductRepository() {}
 

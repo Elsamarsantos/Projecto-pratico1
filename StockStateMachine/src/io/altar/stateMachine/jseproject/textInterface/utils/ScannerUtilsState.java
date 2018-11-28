@@ -184,27 +184,6 @@ public class ScannerUtilsState {
 		
 		
 		
-		
-//		public long getProductToEnter(String mensage,boolean canBeNull) {
-//			String id;
-//			
-//			do {
-//				System.out.println(mensage);
-//				id= sc.nextLine();
-//				if(canBeNull && id.equals("")) {
-//					return -1;
-//				}
-//				
-//				
-//			} while (!isType(id,"Long"));
-//			
-//			return Long.parseLong(id);
-//		}
-//		
-		
-		
-		
-		
 //metodo para procurar por id shelf
 		public Shelf getShelfById(String message,boolean canBeNull) {
 			Long id;

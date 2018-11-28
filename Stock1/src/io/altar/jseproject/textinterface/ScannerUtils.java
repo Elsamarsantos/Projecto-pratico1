@@ -43,10 +43,6 @@ public class ScannerUtils {
 				
 			}
 			break;
-		default:
-			result= true;
-
-
 		}
 		lineSc.close();
 		return result;
@@ -154,23 +150,6 @@ public class ScannerUtils {
 		
 		
 		
-		
-//		public long getProductToEnter(String mensage,boolean canBeNull) {
-//			String id;
-//			
-//			do {
-//				System.out.println(mensage);
-//				id= sc.nextLine();
-//				if(canBeNull && id.equals("")) {
-//					return -1;
-//				}
-//				
-//				
-//			} while (!isType(id,"Long"));
-//			
-//			return Long.parseLong(id);
-//		}
-//		
 		
 		
 		
