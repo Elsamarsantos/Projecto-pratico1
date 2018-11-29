@@ -172,8 +172,10 @@ public class ScannerUtilsState {
 			do {
 				
 				id = getLongScanner(mensage,canBeNull);
-				if(id==-1)
+				if(id==-1) {
+					
 					return null;
+				}
 				productById=productRepository1.consultById(id);
 			
 
@@ -190,6 +192,10 @@ public class ScannerUtilsState {
 			Shelf shelfById;
 			do {
 				id = getLongScanner(message,canBeNull);
+				if(id==-1) {
+
+					return null;
+				}
 				shelfById=shelfRepository1.consultById(id);
 
 
@@ -198,6 +204,29 @@ public class ScannerUtilsState {
 			return shelfById;
 		}
 		
+//metodo para yes ou no
 		
+		public boolean toYesOrNo (String message) {
+			boolean answer = false;
+			System.out.println(message);
+			String input = sc.nextLine();
+			if(input.equals("")) {
+				System.out.println("essa resposta nao e correta");
+				return false;
+			}	
+			else{
 
+				char yesno =Character.toLowerCase(input.charAt(0)) ;
+				switch (yesno) {
+				case 'y':
+					return true;
+
+				case 'n':
+					return false;
+				}
+			}
+			return answer;
+		}
+		
+	
 }

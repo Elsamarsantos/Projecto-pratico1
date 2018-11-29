@@ -9,8 +9,13 @@ public class ConsultShelf implements States {
 
 		Shelf shelfconsult= scannerUtils.getShelfById("Coloque o id da Shelf", true);
 
-		System.out.println("Shelf: " + shelfconsult.toString());
+		if(shelfconsult!=null) {
 
+			System.out.println("Shelf: " + shelfconsult.toString());
+		}
+		else {
+			System.out.println("Essa prateleira nao existe");
+		}
 		return 1;
 	}
 

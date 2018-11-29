@@ -4,10 +4,14 @@ import io.altar.stateMachine.jseproject.model.Product;
 import io.altar.stateMachine.jseproject.model.Shelf;
 import io.altar.stateMachine.jseproject.repositories.ProductRepository;
 import io.altar.stateMachine.jseproject.repositories.ShelfRepository;
+import io.altar.stateMachine.jseproject.services.ProductServices;
+import io.altar.stateMachine.jseproject.services.ShelfServices;
 
 public class EditShelf implements States{
-	ShelfRepository shelfRepository1 = ShelfRepository.getInstance();
-	ProductRepository productRepository1= ProductRepository.getInstance();
+	
+	
+
+	
 	
 	@Override
 	public int execute() {
@@ -16,6 +20,11 @@ public class EditShelf implements States{
 		int capacidade= scannerUtils.getIntScanner("novo valor de capacidade", true);
 		if(capacidade!=-1) {
 			shelfToEdited.setCapacidade(capacidade);
+		}
+		
+		double precoAluguer = scannerUtils.getIntScanner("novo valor de preco do Aluguer", true);
+		if(precoAluguer!=-1) {
+			shelfToEdited.setPrecoAluguer(precoAluguer);
 		}
 		
 		
@@ -33,16 +42,10 @@ public class EditShelf implements States{
 			productToChange.removeShelf(shelfToEdited);
 			}
 			
-			Product productIdNew = productRepository1.consultById(idProduct);
+			Product productIdNew = ProductServices.consultByIdProduct(idProduct);	
 			shelfToEdited.setProdutoAlberga(productIdNew);
 			productIdNew.addToListShelves(shelfToEdited);
 
-		}
-		
-
-		double precoAluguer = scannerUtils.getIntScanner("novo valor de preco do Aluguer", true);
-		if(precoAluguer!=-1) {
-			shelfToEdited.setPrecoAluguer(precoAluguer);
 		}
 		
 		

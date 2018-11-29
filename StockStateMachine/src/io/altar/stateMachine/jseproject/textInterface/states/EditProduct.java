@@ -1,6 +1,10 @@
 package io.altar.stateMachine.jseproject.textInterface.states;
 
+import java.util.Iterator;
+import java.util.List;
+
 import io.altar.stateMachine.jseproject.model.Product;
+import io.altar.stateMachine.jseproject.model.Shelf;
 
 public class EditProduct implements States{
 
@@ -23,6 +27,13 @@ public class EditProduct implements States{
 		if(pvp!=-1) {
 			productToBeEdited.setPvp(pvp);
 		}
+		
+		
+		Shelf shelfInAList = scannerUtils.getShelfById("Insira a prateleira", true);
+		productToBeEdited.addToListShelves(shelfInAList);
+		shelfInAList.setProdutoAlberga(productToBeEdited);
+		
+
 				
 		System.out.println("novo producto: "+ productToBeEdited.toString());
 

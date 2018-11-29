@@ -10,15 +10,14 @@ import io.altar.stateMachine.jseproject.services.ProductServices;
 
 
 public class MenuProduct implements States {
-	ProductRepository productRepository1 = ProductRepository.getInstance();
-	ProductServices productService = new ProductServices();
+	
 	
 	
 	@Override
 	public int execute() {
 		// TODO Auto-generated method stub
 		System.out.println("Lista de Produtos:");
-		Iterator<Product> productlist = productService.consultProduct().iterator();
+		Iterator<Product> productlist = ProductServices.consultAllProduct().iterator();
 		while (productlist.hasNext()){
 
 			System.out.println(productlist.next());

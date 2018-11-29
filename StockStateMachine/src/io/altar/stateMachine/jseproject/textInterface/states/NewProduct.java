@@ -7,7 +7,7 @@ import io.altar.stateMachine.jseproject.services.ProductServices;
 
 public class NewProduct implements States {
 	
-	ProductServices productServices = new ProductServices();
+	
 
 	@Override
 	public int execute() {
@@ -18,7 +18,7 @@ public class NewProduct implements States {
 		double pvp = scannerUtils.getDoubleScanner("colocar o valor do pvp:");
 		
 		Product product1= new Product(valorDesconto, iva, pvp);
-		productServices.createProduct(product1);
+		ProductServices.createProduct(product1);
 		
 		
 		
