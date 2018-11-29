@@ -6,45 +6,28 @@ import io.altar.stateMachine.jseproject.model.Product;
 import io.altar.stateMachine.jseproject.model.Shelf;
 import io.altar.stateMachine.jseproject.repositories.ProductRepository;
 import io.altar.stateMachine.jseproject.repositories.ShelfRepository;
+import io.altar.stateMachine.jseproject.services.ShelfServices;
 
 
 
 
 public class NewShelf implements States {
-
-	ShelfRepository shelfRepository1 = ShelfRepository.getInstance();
-	ProductRepository productRepository1= ProductRepository.getInstance();
 	
+	ShelfServices shelfServices = new ShelfServices();
+
 	@Override
 	public int execute() {
 		int capacidade =scannerUtils.getIntScanner("Coloque o valor de capacidade");		
 		double precoAluguer=scannerUtils.getDoubleScanner("Colocque o preco do Aluger");
 		
 		Product idProduct=null;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("colocar o produto que alberga");
-		System.out.println("Caso nao queira colocar, carregue no Enter");
-		String id = sc.nextLine();
+		if(scannerUtils.getProductById("Qual o id do produto, caso nao queira carrgue Enter", true)!=null) {
 
-		if(id.length()!=0) {
-
-			long ids = Long.parseLong(id);
-			if(productRepository1.consultById(ids)!=null) {
-				idProduct = productRepository1.consultById(ids);
-
-			} 
-			else {
-
-				System.out.println("esse id de produto nao existe");
-				sc.nextLine();
-
-			}
-		}
-
-
+			idProduct =scannerUtils.getProductById("", true);
+		} 
 
 		Shelf shelf1= new Shelf(capacidade, idProduct, precoAluguer);
-		shelfRepository1.saveId(shelf1);
+		shelfServices.createShelf(shelf1);
 		
 		if(idProduct != null){
 		idProduct.addToListShelves(shelf1);	
@@ -52,7 +35,7 @@ public class NewShelf implements States {
 		
 		System.out.println(shelf1.toString());
 
-		return 2;
+		return 1;
 	}
 
 }

@@ -11,7 +11,7 @@ public class ConsultShelf implements States {
 
 		System.out.println("Shelf: " + shelfconsult.toString());
 
-		return 2;
+		return 1;
 	}
 
 }

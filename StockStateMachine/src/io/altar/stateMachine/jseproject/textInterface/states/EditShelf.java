@@ -46,7 +46,7 @@ public class EditShelf implements States{
 		}
 		
 		
-		return 2;
+		return 1;
 	}
 
 }

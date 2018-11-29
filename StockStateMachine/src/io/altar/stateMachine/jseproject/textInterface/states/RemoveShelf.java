@@ -39,7 +39,7 @@ public class RemoveShelf implements States {
 			break;
 
 		case 'n':
-			return 2;
+			return 1;
 
 
 		}
