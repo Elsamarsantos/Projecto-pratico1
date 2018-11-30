@@ -1,7 +1,5 @@
 package io.altar.stateMachine.jseproject.textInterface.states;
 
-import java.util.Iterator;
-import java.util.List;
 
 import io.altar.stateMachine.jseproject.model.Product;
 import io.altar.stateMachine.jseproject.model.Shelf;
@@ -28,13 +26,12 @@ public class EditProduct implements States{
 			productToBeEdited.setPvp(pvp);
 		}
 		
-		
-		Shelf shelfInAList = scannerUtils.getShelfById("Insira a prateleira", true);
+		Shelf shelfInAList = scannerUtils.getShelfById("Insira a prateleira", true);		
+		if(shelfInAList!=null) {
 		productToBeEdited.addToListShelves(shelfInAList);
-		shelfInAList.setProdutoAlberga(productToBeEdited);
+		shelfInAList.setProdutoAlberga(productToBeEdited);	
+		}
 		
-
-				
 		System.out.println("novo producto: "+ productToBeEdited.toString());
 
 		return 1;

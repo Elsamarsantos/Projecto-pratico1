@@ -29,5 +29,6 @@ public class ProductServices {
 	public static Product consultByIdProduct(Long id) {
 		return productRepository1.consultById(id);
 	}
-
+	
+	
 }
