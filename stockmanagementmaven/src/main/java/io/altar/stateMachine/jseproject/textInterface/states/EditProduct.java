@@ -29,13 +29,11 @@ public class EditProduct implements States{
 		Shelf shelfInAList = scannerUtils.getShelfById("Insira a prateleira", true);		
 		if(shelfInAList!=null) {
 			
-			
-		Product productToRemove= shelfInAList.getProdutoAlberga();
-		productToRemove.removeShelf(shelfInAList);
-			
-			
-		productToBeEdited.addToListShelves(shelfInAList);
-		shelfInAList.setProdutoAlberga(productToBeEdited);	
+			Product productToRemove= shelfInAList.getProdutoAlberga();
+			productToRemove.removeShelf(shelfInAList);
+
+			productToBeEdited.addToListShelves(shelfInAList);
+			shelfInAList.setProdutoAlberga(productToBeEdited);	
 		}
 		
 		System.out.println("novo producto: "+ productToBeEdited.toString());
