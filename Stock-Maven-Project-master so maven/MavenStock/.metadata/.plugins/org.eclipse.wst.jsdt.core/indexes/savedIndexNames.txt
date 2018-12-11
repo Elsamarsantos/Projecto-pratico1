@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+/Users/alunotarde/Desktop/Projectos java/MavenStock/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1912361265.index
+3635005707.index
+137198699.index
+3154020512.index
+693874961.index

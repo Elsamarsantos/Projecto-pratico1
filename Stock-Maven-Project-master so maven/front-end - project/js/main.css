@@ -1,0 +1,78 @@
+html, body{
+    height: 100%;
+}
+
+
+
+
+#primeirotitulo{
+   color: aliceblue;
+   margin-bottom: 0px;
+
+}
+#primeirodiv{
+    background-image: linear-gradient(90deg, rgb(8, 169, 209),rgb(121, 3, 33) );
+    
+}
+#navbar{
+    
+}
+.center{
+    text-align: center;
+    align-items: center;
+}
+#home{
+    height: 20cm;
+    margin-top: 5px;
+}
+
+
+
+.back{
+    background-color: rgb(209, 207, 207);
+}
+
+.footer{
+    
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 1cm;
+    color: #999;
+    text-align: center;
+    background-color: #202124;
+    
+
+
+}
+.style{
+    margin: 10px;
+
+    border: solid #2a2b2c;
+    box-shadow: 5px 5px 2px #565658;
+    padding: 1em;
+    
+}
+#tableprodutobyid{
+    
+    margin-top:6px;
+    display:none;
+    border: solid 1px rgb(99, 98, 98)
+}
+#tableshelfbyid{
+    
+    margin-top:6px;
+    display:none;
+    border: solid 1px rgb(99, 98, 98)
+}
+.modal-header{
+   background-color: rgb(226, 223, 223);
+   
+}
+.modal-footer{
+    background-color: rgb(226, 223, 223);
+ }
+ 
+ #tabelaproduto, #tabelaprateleira (tr){
+    height: 5px;
+ }

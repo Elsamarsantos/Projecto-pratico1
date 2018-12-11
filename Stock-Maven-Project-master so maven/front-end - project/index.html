@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Stock Management Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="js/main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="primeirodiv" class="container-fluid">
+        <h2 id="primeirotitulo">A minha Pagina</h2>
+    </div>
+    <!-- comeca a navbar -->
+    <div>
+
+        <nav id="navbar" class="navbar navbar-dark bg-dark center">
+            <a class="navbar-brand" href="#home">Home</a>
+            <a class="navbar-brand" href="#seccaoprodutos">Produtos</a>
+            <a class="navbar-brand" href="#seccaoprateleiras">Prateleiras</a>
+            <!-- <a class="navbar-brand" href="#">Outros</a> -->
+
+            <form class="form-inline">
+                <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-info my-2 my-sm-0  btn-sm" type="submit">Search</button>
+            </form>
+
+            <!-- acaba a navbar -->
+        </nav>
+    </div>
+
+
+    
+
+    <div data-spy="scroll" data-target="#navbar" data-offset="0">
+
+        <!-- comeca as tabelas de roduos e prateleiras -->
+        <div class="container" id="home">
+            <div class="row ">
+                <div class="col-sm-6 col-md-6">
+                   
+                    <h3 class="center back">Produtos</h3>
+                    <p id="vaite">fdgdfgdfgd</p>
+                    
+                    
+                    <table id="tabelaproduto" class="table table-bordered center">
+                        <thead class="table-dark">
+                            <td>DiscountValue</td>
+                            <td>Iva</td>
+                            <td>Pvp</td>
+                            <td>Id</td>
+                        </thead>
+                    </table>
+
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <h3 class="center back">Prateleiras</h3>
+                    <table id="tabelaprateleira" class="table table-bordered center">
+                        <thead class="table-dark">
+                            <td>Capacity</td>
+                            <td>RentPrice</td>
+                            <td>Id</td>
+                            <td>ProductId</td>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <!-- acaba as tabelas de roduos e prateleiras -->
+
+            <!-- começa aqui a secçao de produtos -->
+            <div id="seccaoprodutos">
+                <div class="row back">
+                    <div class="col-sm-12 col-md-6 ">
+                        <h2>Secção Produtos</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p class="float-right"><a href="#primeirotitulo">Back to top</a></p>
+                    </div>
+                </div>
+                <div class="row mb-6">
+                    <!-- começa aqui a adicinar produtos -->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Adicionar produtos</h4>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Adicionar</button>
+                    </div>
+                    <!-- começa o modal de adicionar produto-->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Adicionar o produto</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="">Discount Value:</label>
+                                    <input id="discountValue" type="text"><br>
+                                    <label for="">IVA:</label>
+                                    <input id="iva" type="text"><br>
+                                    <label for="">pvp:</label>
+                                    <input id="pvp" type="text">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="salvar" onclick="addProducts()" type="submit" class="btn btn-primary" data-dismiss="modal">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- aqui acaba o modal do adicionar produto -->
+
+
+
+                    <!-- acaba aqui a adicinar produtos 
+
+            começa aqui a pesquisar produtos-->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Pesquisar por ID</h4>
+                        <label for="">Pesquisar por Id</label>
+                        <input id="iptpes" type="text" placeholder="colocar o Id">
+                        <button id="pesquisarproduto" class="btn btn-warning btn-sm" onclick="getProductsbyId()">Pesquisar</button>
+                        <table id="tableprodutobyid" class="table table-bordered center">
+                            <thead>
+                                <td>DValue</td>
+                                <td>Iva</td>
+                                <td>Pvp</td>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- acaba aqui a pesquisar produtos 
+
+            começa aqui a substituir produtos-->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Substituir o produto por ID</h4>
+                        <form>
+                            <div class="form-group">
+                                <label for="">Colocar o Id do produto alterar</label>
+                                <input type="text" class="form-control-sm" id="iptreplaceidproduto" aria-describedby="emailHelp"
+                                    placeholder="insert Id">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="">Discount Value</label>
+                                <input type="text" class="form-control-sm" id="replacedv" aria-describedby="emailHelp"
+                                    placeholder="insert value">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="">IVA</label>
+                                <input type="text" class="form-control-sm" id="replaceiva" placeholder="insert value">
+                            </div>
+                            <div class="form-group">
+                                <label for="">pvp</label>
+                                <input type="text" class="form-control-sm" id="replacepvp" placeholder="insert value">
+                            </div>
+
+                            <button type="submit" class="btn btn-success" onclick="addreplaceProducts()">Substituir</button>
+                        </form>
+
+                    </div>
+                    <!-- acaba aqui a substituir produtos-->
+                    <!-- comeca aqui a apagar produtos-->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Apagar por ID</h4>
+                        <label for="">Apagar por Id</label>
+                        <input id="iptdeleteidproduto" type="text" placeholder="colocar o Id">
+                        <button id="" class="btn btn-danger btn-sm" onclick="deleteProducts()">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- acaba aqui a apagar produtos-->
+
+
+
+            <!-- Acaba aqui a secçao de produtos -->
+
+            <!-- começa aqui a secçao de prateleiras -->
+
+            <div id="seccaoprateleiras">
+                <div class="row back">
+                    <div class="col-sm-12 col-md-6">
+                        <h2>Secção prateleiras</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p class="float-right"><a href="#primeirotitulo">Back to top</a></p>
+                    </div>
+                </div>
+                <div class="row mb-6">
+                    <!-- começa aqui a adicionar prateleiras -->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Adicionar prateleiras</h4>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">Adicionar</button>
+                    </div>
+                    <!-- comeca o modal -->
+                    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Criar prateleira</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="">Capacity:</label>
+                                    <input id="capacity" type="text"><br>
+                                    <label for="">RentPrice:</label>
+                                    <input id="rentPrice" type="text"><br>
+                                    <label for="">ProductId:</label>
+                                    <input id="productId" type="text">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="salvar2" onclick="addShelves()" type="button" class="btn btn-primary" data-dismiss="modal">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal acaba aqui -->
+
+
+                    <!-- acaba aqui a adicinar prateleiras 
+
+            começa aqui a pesquisar prateleiras-->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Pesquisar por ID</h4>
+                        <label for="">Pesquisar por Id</label>
+                        <input id="iptpes2" type="text" placeholder="colocar o Id">
+                        <button id="pesquisarshelves" class="btn btn-warning btn-sm" onclick="getShelvesbyId()">Pesquisar</button>
+                        <table id="tableshelfbyid" class="table table-bordered center">
+                            <thead>
+                                <td>Capacity</td>
+                                <td>RPrice</td>
+                                <td>ProductId</td>
+                            </thead>
+                        </table>
+
+
+
+                    </div>
+                    <!-- acaba aqui a pesquisar prateleiras 
+
+            começa aqui a  substituir prateleiras-->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Substituir a prateleira por ID</h4>
+                        <form>
+                            <div class="form-group">
+                                <label for="">Colocar o Id da prateleira a alterar</label>
+                                <input type="text" class="form-control-sm" id="iptreplaceidshelf" aria-describedby="emailHelp"
+                                    placeholder="insert Id">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="">Capacity</label>
+                                <input type="text" class="form-control-sm" id="replacecapacity" aria-describedby="emailHelp"
+                                    placeholder="insert value">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="">RentPrice</label>
+                                <input type="text" class="form-control-sm" id="replacerentprice" placeholder="insert value">
+                            </div>
+                            <div class="form-group">
+                                <label for="">ProductId</label>
+                                <input type="yext" class="form-control-sm" id="replaceproductid" placeholder="insert value">
+                            </div>
+
+                            <button type="submit" class="btn btn-success" onclick="addreplaceShelves()">Substituir</button>
+                        </form>
+                    </div>
+                    <!-- comeca aqui a apagar produtos-->
+                    <div class="col-sm-12 col-md-6 col-lg-4 style">
+                        <h4>Apagar por ID</h4>
+                        <label for="">Apagar por Id</label>
+                        <input id="iptdeleteidshelf" type="text" placeholder="colocar o Id">
+                        <button id="" class="btn btn-danger btn-sm" onclick="deleteShelves()">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- acaba aqui a apagar produtos-->
+            <!-- Acaba aqui a secçao de prateleiras -->
+
+        </div>
+    </div>
+
+    <footer id="footer" class="footer">
+        
+        <p class="float-right"><a href="#primeirotitulo">Back to top</a></p>
+        
+    </footer>
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" 
+        crossorigin="anonymous"></script>-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/class.js"></script> 
+</body>
+
+</html>
